@@ -1,6 +1,7 @@
 from rtreelib import RTree, Rect
 from rtreelib.diagram import create_rtree_diagram
 import csv
+from rtreelib.pg import init_db_pool, create_rtree_tables, export_to_postgis, clear_rtree_tables
 
 t = RTree()
 M = 0.0000001
@@ -12,7 +13,7 @@ for i in val:
 
     if identity == "id":
         continue
-    if int(identity) > 10:
+    if int(identity) > 100:
         break
     x = float(x)
     y = float(y)
@@ -21,3 +22,12 @@ for i in val:
 create_rtree_diagram(t)
 
 f.close()
+
+init_db_pool(user="postgres", password="dlwjdgns1587", database="rtreelib_100")
+
+create_rtree_tables(srid=4326)
+
+rtree_id = export_to_postgis(t, srid=4326)
+
+# cleaning table
+clear_rtree_tables()
