@@ -13,21 +13,22 @@ for i in val:
 
     if identity == "id":
         continue
-    if int(identity) > 100:
+    if int(identity) > 10000:
         break
     x = float(x)
     y = float(y)
     t.insert(identity, Rect(x, y, x + M, y + M))
 
-create_rtree_diagram(t)
+#create_rtree_diagram(t)    # too busy
 
 f.close()
 
-init_db_pool(user="postgres", password="dlwjdgns1587", database="rtreelib_100")
+init_db_pool(user="postgres", password="dlwjdgns1587", database="rtreelib_10000")
 
 create_rtree_tables(srid=4326)
 
 rtree_id = export_to_postgis(t, srid=4326)
+
 
 # cleaning table
 clear_rtree_tables()
